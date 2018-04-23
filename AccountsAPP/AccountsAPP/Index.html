@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Transactions</title>
+    <meta charset="utf-8" />
+    <script src="scripts/jquery-3.3.1.min.js"></script>
+    <script src="scripts/LocalScripts.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            GetAllAccountsToDDL('#ddlAccounts');
+        });
+    </script>
+</head>
+<body>
+    <div id="header">
+        <h1>Accounts</h1>
+    </div>
+    <div style="height: auto; width: 90%; padding: 5px;">
+        <div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            Select An Account : 
+                        </td>
+                        <td>
+                            <select id="ddlAccounts" onchange="AccountSelected()"></select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="tblAccountInfo"></table>
+            <div id="divAccountBalance"></div>
+            <div id="divAccountModifiedOn"></div>
+            <br />
+            <div id="divAccountActions" style="display:none">
+                <input type="button" id="btnModifyBalance" onclick="ModifyBalanceClick()" value="Add/Withdraw Amount" />
+                <input type="button" id="btnBulkModifyBalance" onclick="BulkModifyBalanceClick()" value="Multiple Add/Withdraw Amount" />
+                <input type="button" id="btnViewTransactionHistory" onclick="ViewTransactionHistoryClick()" value="View Transaction History" />
+            </div>
+            <br />
+            <div id="divModifyBalace" style="display:none;">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Select Transaction Type :
+                            </td>
+                            <td>
+                                <select id="ddlTransactionType">
+                                    <option value="0">Deposit</option>
+                                    <option value="1">Withdraw</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr><td colspan="1"></td></tr>
+                        <tr>
+                            <td>
+                                Currency Type :
+                            </td>
+                            <td>
+                                <select id="ddlCurrencies" onchange="SetConversionRate(this.value)"></select>&nbsp;&nbsp;<span id="spanConversionRate"></span>
+                            </td>
+                        </tr>
+                        <tr><td colspan="1"></td></tr>
+                        <tr>
+                            <td>
+                                Amount :
+                            </td>
+                            <td>
+                                <input type="text" id="txtDepositAmount" />
+                            </td>
+                        </tr>
+                        <tr><td colspan="1"></td></tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="button" id="btnUpdateAmount" onclick="UpdateAmountClick()" value="Update Balance" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="divBulkModify" style="display:none">
+                <input type="button" id="btnAddBulkModifyItem" onclick="AddBulkModifyRow()" value="Add Transaction" />
+                <br />
+                <select id="ddlBulkModifyCurrencies" style="visibility:hidden"></select>
+                <br />
+                <table id="tableBulkModify" border="1" cellpadding="4">
+                    <thead>
+                        <tr>
+                            <td>Transaction Type</td>
+                            <td>Currency Type</td>
+                            <td>Amount</td>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyBulkModify"></tbody>
+                </table>
+                <br />
+                <br />
+                <input type="button" id="btnUpdateBulkModify" onclick="UpdateBulkModify()" value="Bulk Update Transaction" />
+            </div>
+            <div id="divViewTransactionHistory" style="display:none">
+                <input type="button" id="btnLoadTransactionHistory" onclick="LoadTransactionHistory()" value="Load Transaction History" />
+                <br />
+                <br />
+                <table id="tableViewTransactionHistory" border="1" cellpadding="4">
+                    <thead>
+                        <tr>
+                            <td>Currency Code</td>
+                            <td>Transaction Type</td>
+                            <td>Transaction Amount</td>
+                            <td>Conversion Rate To Dollar</td>
+                            <td>Old Balance</td>
+                            <td>New Balance</td>
+                            <td>Time</td>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyViewTransactionHistory">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br />
+    </div>
+
+    <input type="hidden" id="hdnAccountDetails" />
+    <input type="hidden" id="hdnCurrencyDetails" />
+</body>
+</html>
